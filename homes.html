@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main"></div>
+
+    <script>
+        // key 9050502cb4f092054e46a7f47ebde0dc
+        let input = prompt("Enter name")
+        let inputss = 'https://api.themoviedb.org/3/search/movie?query=' + input + '&api_key=9050502cb4f092054e46a7f47ebde0dc'
+
+        fetch(inputss)
+            // Interstellar
+
+
+            .then((response) => { return response.json() })
+            .then((result) => {
+                console.log(result)
+                
+                imageo(result)
+            })
+            .catch((err) => console.log("Error: " + err))
+
+
+
+        function imageo(result){
+            for (let i = 0; i < result.results.length; i++){
+                let divs = document.createElement("div")
+                let para = document.createElement("p")
+                let image = document.createElement("img")
+                let b = "https://image.tmdb.org/t/p/w500"
+                image.src = b + result.results[i].poster_path
+                para.innerHTML = result.results[i].title
+                divs.append(image)
+                divs.append(para)
+                document.querySelector(".main").append(divs)
+            }
+        }
+
+
+        
+    </script>
+</body>
+
+</html>
