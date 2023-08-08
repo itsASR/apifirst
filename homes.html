@@ -9,42 +9,92 @@
 
 <body>
     <div class="main"></div>
+    <input type="text">
+    <button>Search</button>
+    <!-- <img class="imgclass" src=""> -->
 
     <script>
         // key 9050502cb4f092054e46a7f47ebde0dc
-        let input = prompt("Enter name")
-        let inputss = 'https://api.themoviedb.org/3/search/movie?query=' + input + '&api_key=9050502cb4f092054e46a7f47ebde0dc'
+        // let input = prompt("Enter name")
+        let input = document.querySelector("input")
+        let btn = document.querySelector("button")
 
-        fetch(inputss)
-            // Interstellar
-
-
-            .then((response) => { return response.json() })
-            .then((result) => {
+        btn.onclick = function () {
+            console.log(input.value)
+            let inputss = 'https://api.themoviedb.org/3/search/movie?query=' + input.value + '&api_key=9050502cb4f092054e46a7f47ebde0dc'
+            fetch(inputss)
+                .then((response) => { return response.json() })
+                .then((result) => {
                 console.log(result)
-                
+                checkMovie(result)
                 imageo(result)
-            })
-            .catch((err) => console.log("Error: " + err))
+                })
+                .catch((err) => console.log("Error: " + err))
 
 
 
-        function imageo(result){
-            for (let i = 0; i < result.results.length; i++){
+        }
+
+
+        function imageo(result) {
+            for (let i = 0; i < result.results.length; i++) {
                 let divs = document.createElement("div")
                 let para = document.createElement("p")
                 let image = document.createElement("img")
                 let b = "https://image.tmdb.org/t/p/w500"
-                image.src = b + result.results[i].poster_path
-                para.innerHTML = result.results[i].title
-                divs.append(image)
-                divs.append(para)
-                document.querySelector(".main").append(divs)
+                let finalpath = b + result.results[i].poster_path
+                image.src = finalpath
+                if (finalpath.includes("null")) {
+                    image.src = 'chand.png'
+                    para.innerHTML = result.results[i].title
+                    divs.append(image)
+                    divs.append(para)
+                    document.querySelector(".main").append(divs)
+                }
+                else {
+                    para.innerHTML = result.results[i].title
+                    divs.append(image)
+                    divs.append(para)
+                    document.querySelector(".main").append(divs)
+                    // onerror() = "imgs()"
+                }
             }
         }
 
 
-        
+        function checkMovie(result) {
+            if (result.results.length === 0) {
+                document.write("No Movie Found")
+            }
+        }
+
+
+        // function imgs(error){
+        //     let divs = document.createElement("div")
+        //     let image = document.createElement("img")
+        //     image.src = "chand.jpg"
+        //     divs.append(image)
+        //     document.querySelector(".main").append(divs)
+
+
+        // }
+        // function imageload(){
+        //     fetch('')
+        //     .then((responses) => { return responses.json()})
+        //     .then((imgs) => {
+        //         // image append
+        //     })
+        //     .catch((imgss) => console.log("Error: " + err))
+
+        //     let imagdiv = document.querySelector(".imgclass")
+        //     imagdiv.src = 'chand.jpg'
+
+        // }
+
+
+
+
+
     </script>
 </body>
 
